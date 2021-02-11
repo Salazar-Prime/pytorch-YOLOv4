@@ -129,14 +129,14 @@ def main(engine_path, image_path, image_size):
         namesfile="obj.names"
         num_classes = 4
         ttime = 0
-        iterations = 10
+        iterations = 20
         
         
-        for i in range(iterations+1):
+        for i in range(iterations+10):
             boxes, t = detect(context, buffers, image_src, image_size, num_classes)
             
             # total time for 10 iterations - skip first Because the first iteration is usually longer
-            if i==0:
+            if i<10:
                 continue
             ttime = ttime + t 
 
@@ -145,6 +145,7 @@ def main(engine_path, image_path, image_size):
         
         print('-----------------------------------')
         print('    TRT inference time: %f' % (ttime/iterations))
+        print('    Frames per Second:  %0.2f' % (iterations/ttime))        
         print('-----------------------------------')
 
 def get_engine(engine_path):

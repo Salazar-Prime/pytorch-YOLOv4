@@ -20,13 +20,13 @@ def main(onnx_file, image_path, name_file, batch_size):
     
     # change based on model
     ttime = 0
-    iterations = 10
+    iterations = 20
     
-    for i in range(iterations+1):
+    for i in range(iterations+10):
         boxes, t = detect(session, name_file, image_src)
             
         # total time for 10 iterations - skip first Because the first iteration is usually longer
-        if i==0:
+        if i<10:
             continue
         ttime = ttime + t 
     
@@ -35,6 +35,7 @@ def main(onnx_file, image_path, name_file, batch_size):
     
     print('-----------------------------------')
     print('    ONNX inference time: %f' % (ttime/iterations))
+    print('    Frames per second:   %0.2f' % (iterations/ttime))
     print('-----------------------------------')
 
 
